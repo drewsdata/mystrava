@@ -5,6 +5,8 @@ library(gghighlight)
 library(lubridate)
 library(dplyr)
 
+# ref: https://www.andrewaage.com/post/analyzing-strava-data-using-r/
+
 app_name <- 'rTrainingApp' # chosen by user
 app_client_id  <- Sys.getenv("app_client_id") 
 app_secret <- Sys.getenv("app_secret") 
@@ -14,13 +16,11 @@ stoken <- httr::config(token = strava_oauth(app_name, app_client_id, app_secret,
 # stoken <- httr::config(token = readRDS('.httr-oauth')[[1]])
 
 
+# public test
 myinfo <- get_athlete(stoken, id = '10328239')
 head(myinfo)
 
-### useful examples ###
-## https://www.andrewaage.com/post/analyzing-strava-data-using-r/
-###
-
+# examples
 my_acts <- get_activity_list(stoken)
 df <- compile_activities(my_acts)
 saveRDS(df, file = here::here("strava_df.rds"))
